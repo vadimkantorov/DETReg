@@ -11,11 +11,22 @@ import argparse
 
 from main import get_datasets, set_dataset_path, get_args_parser
 
-def selective_search_(img, h, w, res_size=None, selectivesearchsegmentation = __import__('datasets.selectivesearchsegmentation')):
-    algo = selectivesearchsegmentation.SelectiveSearch()
-    boxes_xywh, *_ = algo(img.transpose(2, 0, 1)[None])
-    return boxes_xywh[0]
-    #return selective_search(img, h, w, res_size=None)
+def selective_search_(img_det, h, w, res_size=None, selectivesearchsegmentation = __import__('datasets.selectivesearchsegmentation')):
+    print(img.dtype, img.shape)
+    
+    if res_size is not None:
+        img_det = cv2.resize(img_det, (res_size, res_size))
+
+    ss = selectivesearchsegmentation.SelectiveSearch()
+    boxes = ss(img_det.transpose(2, 0, 1)[None])[0][0].numpy().astype('float32')
+
+    if res_size is not None:
+        boxes /= res_size
+        boxes *= np.array([w, h, w, h])
+
+    boxes[..., 2] = boxes[..., 0] + boxes[..., 2]
+    boxes[..., 3] = boxes[..., 1] + boxes[..., 3]
+    return boxes
 
 def cache_ss_item(cache_dir, img_path):
     img = Image.open(img_path).convert("RGB")
