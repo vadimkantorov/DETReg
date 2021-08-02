@@ -11,7 +11,7 @@ import argparse
 
 from main import get_datasets, set_dataset_path, get_args_parser
 
-def selective_search_(img_det, h, w, res_size=None, selectivesearchsegmentation = __import__('datasets.selectivesearchsegmentation')):
+def selective_search_(img_det, h, w, res_size=None, cv2 = __import__('cv2'), selectivesearchsegmentation = __import__('datasets.selectivesearchsegmentation')):
     print(img.dtype, img.shape)
     
     if res_size is not None:
