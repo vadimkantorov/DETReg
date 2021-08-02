@@ -26,7 +26,7 @@ import torch.distributed as dist
 from torch import Tensor
 
 import torchvision
-assert tuple(map(int, torchvision.__version__))[:2] >= (0, 8)
+assert tuple(map(int, torchvision.__version__))[:2] >= (0, 7)
 
 class SmoothedValue(object):
     """Track a series of values and provide access to smoothed values over a
