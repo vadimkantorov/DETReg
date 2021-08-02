@@ -18,7 +18,7 @@ def selective_search_(img_det, h, w, res_size=None, cv2 = __import__('cv2'), sel
         img_det = cv2.resize(img_det, (res_size, res_size))
 
     ss = selectivesearchsegmentation.SelectiveSearch()
-    boxes = ss(img_det.transpose(2, 0, 1)[None])[0][0].numpy().astype('float32')
+    boxes = ss(img_det.transpose(2, 0, 1)[None].astype('float32') / 255.0)[0][0].numpy().astype('float32')
 
     if res_size is not None:
         boxes /= res_size
