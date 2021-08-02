@@ -11,6 +11,11 @@ import argparse
 
 from main import get_datasets, set_dataset_path, get_args_parser
 
+def selective_search_(img, h, w, res_size=None, selectivesearchsegmentation = __import__('datasets.selectivesearchsegmentation')):
+    algo = selectivesearchsegmentation.SelectiveSearch()
+    boxes_xywh, *_ = algo(img.transpose(2, 0, 1)[None])
+    return boxes_xywh[0]
+    #return selective_search(img, h, w, res_size=None)
 
 def cache_ss_item(cache_dir, img_path):
     img = Image.open(img_path).convert("RGB")
@@ -19,7 +24,7 @@ def cache_ss_item(cache_dir, img_path):
     fp = os.path.join(cache_dir, fn)
 
     if not os.path.exists(fp):
-        boxes = selective_search(img, h, w, res_size=None)
+        boxes = selective_search_(img, h, w, res_size=None)
         with open(fp, 'wb') as f:
             np.save(f, boxes)
 
