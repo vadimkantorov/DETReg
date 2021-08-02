@@ -35,7 +35,7 @@ def cache_ss_item(cache_dir, img_path):
     fp = os.path.join(cache_dir, fn)
 
     if not os.path.exists(fp):
-        boxes = selective_search_(img, h, w, res_size=None)
+        boxes = selective_search(img, h, w, res_size=None)
         with open(fp, 'wb') as f:
             np.save(f, boxes)
 
