@@ -72,10 +72,11 @@ code_root/
 ```
 Note that in this work we used the ImageNet100 dataset, which is x10 smaller than ImageNet. To create ImageNet100 run the following command:
 ```bash
+ROOT=$PWD
 mkdir -p data/ilsvrc100/train
 mkdir -p data/ilsvrc100/val
-while read line; do ln -s <code_root>/data/ilsvrc/train/$line <code_root>/data/ilsvrc100/train/$line; done < <code_root>/datasets/category.txt
-while read line; do ln -s <code_root>/data/ilsvrc/val/$line <code_root>/data/ilsvrc100/val/$line; done < <code_root>/datasets/category.txt
+while read line; do ln -s "$ROOT/data/ilsvrc/train/$line"  "$ROOT/data/ilsvrc100/train/$line"; done < "$ROOT/datasets/category.txt"
+while read line; do ln -s "$ROOT/data/ilsvrc/val/$line"    "$ROOT/data/ilsvrc100/val/$line"  ; done < "$ROOT/datasets/category.txt"
 ```
 
 This should results with the following structure:
